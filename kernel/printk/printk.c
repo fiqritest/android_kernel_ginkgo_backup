@@ -787,8 +787,8 @@ static ssize_t devkmsg_write(struct kiocb *iocb, struct iov_iter *from)
 
 	buf[len] = '\0';
 	if (!copy_from_iter_full(buf, len, from)) {
-		kfree(buf);
-		return -EFAULT;
+		ret = -EFAULT;
+		goto free;
 	}
 
 	/*
@@ -816,7 +816,11 @@ static ssize_t devkmsg_write(struct kiocb *iocb, struct iov_iter *from)
 		}
 	}
 
+	if (!strncmp("healthd", line, 7))
+		goto free;
+
 	printk_emit(facility, level, NULL, 0, "%s", line);
+free:
 	kfree(buf);
 	return ret;
 }
