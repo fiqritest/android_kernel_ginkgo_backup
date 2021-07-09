@@ -44,6 +44,9 @@
 #include <linux/syscore_ops.h>
 #include <linux/suspend.h>
 #include <linux/notifier.h>
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+#include <linux/wakeup_reason.h> /* Add-HMI_M516_A01-51 */
+#endif
 
 #include "irq-gic-common.h"
 
@@ -471,6 +474,9 @@ static void gic_show_resume_irq(struct gic_chip_data *gic)
 			name = desc->action->name;
 
 		pr_warn("%s: %d triggered %s\n", __func__, irq, name);
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+		log_wakeup_reason(irq); /* Add-HMI_M516_A01-51 */
+#endif
 	}
 }
 
