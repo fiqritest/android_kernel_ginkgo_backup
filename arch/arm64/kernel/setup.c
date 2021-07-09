@@ -65,6 +65,9 @@
 #include <asm/xen/hypervisor.h>
 #include <asm/mmu_context.h>
 #include <asm/system_misc.h>
+#ifdef CONFIG_BOOT_INFO
+#include <asm/bootinfo.h>
+#endif
 
 #ifdef CONFIG_OF_FLATTREE
 void __init early_init_dt_setup_pureason_arch(unsigned long pu_reason)
