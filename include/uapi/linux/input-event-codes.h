@@ -337,6 +337,11 @@
 
 #define KEY_MICMUTE		248	/* Mute / unmute the microphone */
 
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+#define KEY_ANT_CONNECT         0x292	/* key for sar ant check */
+#define KEY_ANT_UNCONNECT       0x293	/* key for sar ant check */
+#endif
+
 /* Code 255 is reserved for special needs of AT keyboard driver */
 
 #define BTN_MISC		0x100
