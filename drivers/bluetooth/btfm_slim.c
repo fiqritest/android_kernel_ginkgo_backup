@@ -26,6 +26,9 @@
 #include "btfm_slim.h"
 #include "btfm_slim_wcn3990.h"
 #include <linux/bluetooth-power.h>
+#ifdef CONFIG_FM_INSIDE_LAN
+#include <sound/fm_lan.h>
+#endif
 
 int btfm_slim_write(struct btfmslim *btfmslim,
 		uint16_t reg, int bytes, void *src, uint8_t pgd)
@@ -507,6 +510,14 @@ static int btfm_slim_probe(struct slim_device *slim)
 	BTFMSLIM_DBG("");
 	if (!slim->ctrl)
 		return -EINVAL;
+
+#ifdef CONFIG_FM_INSIDE_LAN
+	ret = gpio_request(g_fm_lan_gpio, "g_fm_lan_gpio");
+	if (0 != ret) {
+		BTFMSLIM_ERR("request fm lan gpio97 failed: ret = %d", ret);
+		return ret;
+	}
+#endif
 
 	/* Allocation btfmslim data pointer */
 	btfm_slim = kzalloc(sizeof(struct btfmslim), GFP_KERNEL);
