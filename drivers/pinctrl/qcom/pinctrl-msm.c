@@ -40,6 +40,9 @@
 #include "../pinconf.h"
 #include "pinctrl-msm.h"
 #include "../pinctrl-utils.h"
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+#include <linux/wakeup_reason.h> /* Add-HMI_M516_A01-51 */
+#endif
 #include <linux/suspend.h>
 #ifdef CONFIG_HIBERNATION
 #include <linux/notifier.h>
@@ -622,8 +625,15 @@ static void msm_gpio_dbg_show(struct seq_file *s, struct gpio_chip *chip)
 	unsigned i;
 
 	for (i = 0; i < chip->ngpio; i++, gpio++) {
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+		if ( i != 30 && i != 31 && i != 32 && i != 33 && i != 0 && i != 1 && i != 2 && i != 3 ) {
+			msm_gpio_dbg_show_one(s, NULL, chip, i, gpio);
+			seq_puts(s, "\n");
+		}
+#else
 		msm_gpio_dbg_show_one(s, NULL, chip, i, gpio);
 		seq_puts(s, "\n");
+#endif
 	}
 }
 
@@ -2035,6 +2045,11 @@ static void msm_pinctrl_resume(void)
 				name = desc->action->name;
 
 			pr_warn("%s: %d triggered %s\n", __func__, irq, name);
+
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+			log_wakeup_reason(irq); /* Add-HMI_M516_A01-51 */
+#endif
+
 		}
 	}
 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
