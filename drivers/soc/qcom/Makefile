@@ -73,6 +73,7 @@ obj-$(CONFIG_MSM_PIL_SSR_BG) += subsys-pil-bg.o
 obj-$(CONFIG_QTI_NOTIFY_SIDEBAND) += sideband_notify.o
 obj-$(CONFIG_MSM_BGRSB) += bg_rsb.o
 obj-$(CONFIG_MSM_BGRSB_RPMSG) += bgrsb_rpmsg.o
+obj-$(CONFIG_SERIAL_NUM) += serial_num.o
 
 ifdef CONFIG_MSM_SUBSYSTEM_RESTART
        obj-y += subsystem_notif.o
