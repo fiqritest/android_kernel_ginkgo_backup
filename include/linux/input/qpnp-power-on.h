@@ -99,4 +99,18 @@ static inline bool qpnp_pon_check_hard_reset_stored(void)
 }
 #endif
 
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+int qpnp_pon_is_lpk(void);
+int qpnp_pon_is_ps_hold_reset(void);
+#else
+static inline int qpnp_pon_is_lpk(void)
+{
+	return -ENODEV;
+}
+static inline int qpnp_pon_is_ps_hold_reset(void)
+{
+	return -ENODEV;
+}
+#endif
+
 #endif
