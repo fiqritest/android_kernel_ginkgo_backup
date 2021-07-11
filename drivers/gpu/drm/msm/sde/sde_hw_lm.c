@@ -201,8 +201,10 @@ static void sde_hw_lm_setup_dim_layer(struct sde_hw_mixer *ctx,
 	int stage_off;
 	u32 val = 0, alpha = 0;
 
+#ifndef CONFIG_MACH_XIAOMI_GINKGO
 	if (dim_layer->stage == SDE_STAGE_BASE)
 		return;
+#endif
 
 	stage_off = _stage_offset(ctx, dim_layer->stage);
 	if (stage_off < 0) {
