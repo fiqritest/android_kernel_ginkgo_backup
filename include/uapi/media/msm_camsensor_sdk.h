@@ -56,11 +56,6 @@
 
 #define SECURE_CAM_RST_MODULES
 
-#ifdef CONFIG_MACH_XIAOMI_GINKGO
-/* Switch for virtual camera */
-#define VIRTUAL_CAMERA
-#endif
-
 enum msm_sensor_camera_id_t {
 	CAMERA_0,
 	CAMERA_1,
@@ -68,9 +63,6 @@ enum msm_sensor_camera_id_t {
 	CAMERA_3,
 #ifdef CONFIG_MACH_XIAOMI_GINKGO
 	CAMERA_4,
-#endif
-#ifdef VIRTUAL_CAMERA
-	CAMERA_5,
 #endif
 	MAX_CAMERAS,
 };
