@@ -4404,10 +4404,14 @@ static void _sde_plane_install_properties(struct drm_plane *plane,
 				catalog->mixer[0].sblk->maxblendstages) {
 			zpos_max = catalog->mixer[0].sblk->maxblendstages - 1;
 
+#ifdef CONFIG_MACH_XIAOMI_GINKGO
+			if (zpos_max > SDE_STAGE_MAX - SDE_STAGE_0 - 1)
+#else
 			if (catalog->has_base_layer &&
 					(zpos_max > SDE_STAGE_MAX - 1))
 				zpos_max = SDE_STAGE_MAX - 1;
 			else if (zpos_max > SDE_STAGE_MAX - SDE_STAGE_0 - 1)
+#endif
 				zpos_max = SDE_STAGE_MAX - SDE_STAGE_0 - 1;
 		}
 	} else if (plane->type != DRM_PLANE_TYPE_PRIMARY) {
