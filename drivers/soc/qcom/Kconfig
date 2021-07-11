@@ -897,6 +897,11 @@ source "drivers/soc/qcom/hab/Kconfig"
 source "drivers/soc/qcom/rmnet_ctl/Kconfig"
 source "drivers/soc/qcom/hgsl/Kconfig"
 
+config SERIAL_NUM
+	bool "Enable Serial Number Proc Interface"
+	help
+	 Provide a interface for reading CPU serial number.
+
 config MSM_PERFORMANCE
 	tristate "msm performance driver to support userspace fmin/fmax request"
 	default n
