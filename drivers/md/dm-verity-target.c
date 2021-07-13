@@ -62,6 +62,7 @@ struct dm_verity_prefetch_work {
 struct buffer_aux {
 	int hash_verified;
 };
+
 /*
  * While system shutdown, skip verity work for I/O error.
  */
