@@ -108,6 +108,8 @@ source "fs/fuse/Kconfig"
 source "fs/overlayfs/Kconfig"
 source "fs/incfs/Kconfig"
 
+source "fs/exfat/Kconfig"
+
 menu "Caches"
 
 source "fs/fscache/Kconfig"
