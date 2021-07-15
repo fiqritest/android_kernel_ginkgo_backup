@@ -1359,7 +1359,7 @@ static int max98927_set_clock(struct max989xx_priv *max98927,
 					return -EINVAL;
 			}
 
-			pr_info("%s: BLCK fix to %d\n", __func__, blr_clk_ratio);
+			pr_debug("%s: BLCK fix to %d\n", __func__, blr_clk_ratio);
 			regmap_update_bits(max98927->regmap[j], pcm_clock_setup,
 					MAX98927_PCM_Clock_setup_PCM_BSEL_Mask, value);
 		}
@@ -1536,7 +1536,7 @@ static int max98927_stream_mute(struct snd_soc_dai *codec_dai, int mute, int str
 	unsigned int spk_gain = MAX98927_Speaker_Gain;
 	int i, rc;
 
-	pr_info("%s--- stream %d, mute %d \n", __func__, stream, mute);
+	pr_debug("%s--- stream %d, mute %d \n", __func__, stream, mute);
 	if (!max98927) {
 		pr_err("%s ------ priv data null pointer\n", __func__);
 		return 0;
@@ -1547,7 +1547,7 @@ static int max98927_stream_mute(struct snd_soc_dai *codec_dai, int mute, int str
 			if (max98927_can_use_dsm(max98927)){
 				afe_dsm_ramp_dn_cfg((uint8_t*) payload, 25);
 			}
-			pr_info("%s ------ disable max98927 \n", __func__);
+			pr_debug("%s ------ disable max98927 \n", __func__);
 			if (max98927->mono_stereo != 0x3){
 				for (i = 0; i < MAX_CHANNEL_NUM; i++) {
 					if(i2c_states & (0x1 << i)) {
@@ -1602,7 +1602,7 @@ static int max98927_stream_mute(struct snd_soc_dai *codec_dai, int mute, int str
 						regmap_write(max98927->regmap[i], MAX98927_Measurement_enables, 0x0);
 				}
 			}
-			pr_info("%s ------ disable max98927 capture\n", __func__);
+			pr_debug("%s ------ disable max98927 capture\n", __func__);
 		} else {
 			for (i = 0; i < MAX_CHANNEL_NUM; i++) {
 				if(i2c_states & (0x1 << i)) {
@@ -1638,7 +1638,7 @@ static int max98927_stream_mute(struct snd_soc_dai *codec_dai, int mute, int str
 			afe_dsm_set_calib((uint8_t *)payload);
 			//load calibration to DSM
 			mutex_unlock(&dsm_lock);
-			pr_info("%s ------ enable max98927 capture\n", __func__);
+			pr_debug("%s ------ enable max98927 capture\n", __func__);
 		}
 	}
 	return 0;
@@ -1664,7 +1664,7 @@ static int max98927_feedforward_event(struct snd_soc_dapm_widget *w,
 		pr_err("%s------priv data null pointer\n", __func__);
 		return ret;
 	}
-	pr_info("%s---feedforward event %d\n", __func__, event);
+	pr_debug("%s---feedforward event %d\n", __func__, event);
 	switch(event){
 	case SND_SOC_DAPM_POST_PMU:
 		break;
@@ -1693,7 +1693,7 @@ static int max98927_feedback_event(struct snd_soc_dapm_widget *w,
 		pr_err("%s------priv data null pointer\n", __func__);
 		return ret;
 	}
-	pr_info("%s---feedback event %d\n", __func__, event);
+	pr_debug("%s---feedback event %d\n", __func__, event);
 	switch(event){
 	case SND_SOC_DAPM_POST_PMU:
 		break;
