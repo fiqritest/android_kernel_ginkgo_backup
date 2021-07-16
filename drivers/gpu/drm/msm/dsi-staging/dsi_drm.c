@@ -89,7 +89,7 @@ EXPORT_SYMBOL(drm_unregister_client);
  */
 int drm_notifier_call_chain(unsigned long val, void *v)
 {
-	pr_err("%s,%d,val = %d\n",__func__,__LINE__,val);
+	pr_err("%s, %zd, val = %zd\n",__func__,__LINE__,val);
 	return blocking_notifier_call_chain(&drm_notifier_list, val, v);
 }
 EXPORT_SYMBOL(drm_notifier_call_chain);
