@@ -230,7 +230,9 @@ static void dsi_bridge_pre_enable(struct drm_bridge *bridge)
 
 	if ((strnstr(saved_command_line, "tianma", strlen(saved_command_line)) != NULL) || 
 	    (strnstr(saved_command_line, "shenchao", strlen(saved_command_line)) != NULL))
-		msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &g_notify_data);
+		if (c_bridge->display->drm_conn->state->crtc &&
+		    c_bridge->display->drm_conn->state->crtc->state->active_changed)
+			msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &g_notify_data);
 #endif
 
 	/* By this point mode should have been validated through mode_fixup */
@@ -269,7 +271,9 @@ static void dsi_bridge_pre_enable(struct drm_bridge *bridge)
 #ifdef CONFIG_MACH_XIAOMI_GINKGO
 	if ((strnstr(saved_command_line, "tianma", strlen(saved_command_line)) != NULL) || 
 	    (strnstr(saved_command_line, "shenchao", strlen(saved_command_line)) != NULL))
-		msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &g_notify_data);
+		if (c_bridge->display->drm_conn->state->crtc &&
+		    c_bridge->display->drm_conn->state->crtc->state->active_changed)
+			msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &g_notify_data);
 #endif
 	SDE_ATRACE_END("dsi_display_enable");
 
@@ -421,7 +425,9 @@ static void dsi_bridge_post_disable(struct drm_bridge *bridge)
 #ifdef CONFIG_MACH_XIAOMI_GINKGO
 	if ((strnstr(saved_command_line, "tianma", strlen(saved_command_line)) != NULL) || 
 	    (strnstr(saved_command_line, "shenchao", strlen(saved_command_line)) != NULL)) {
-		msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &g_notify_data);
+		if (c_bridge->display->drm_conn->state->crtc &&
+		    c_bridge->display->drm_conn->state->crtc->state->active_changed)
+			msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &g_notify_data);
 	}
 #endif
 
@@ -448,7 +454,9 @@ static void dsi_bridge_post_disable(struct drm_bridge *bridge)
 #ifdef CONFIG_MACH_XIAOMI_GINKGO
 	if ((strnstr(saved_command_line, "tianma", strlen(saved_command_line)) != NULL) || 
 	    (strnstr(saved_command_line, "shenchao", strlen(saved_command_line)) != NULL)) {
-		msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &g_notify_data);
+		if (c_bridge->display->drm_conn->state->crtc &&
+		    c_bridge->display->drm_conn->state->crtc->state->active_changed)
+			msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &g_notify_data);
 	}
 
 	if (c_bridge->display->is_prim_display)
