@@ -1227,6 +1227,11 @@ bool is_empty_dir_inode(struct inode *inode)
 }
 
 #ifdef CONFIG_UNICODE
+/*
+ * Determine if the name of a dentry should be casefolded.
+ *
+ * Return: if names will need casefolding
+ */
 bool needs_casefold(const struct inode *dir)
 {
 	return IS_CASEFOLDED(dir) && dir->i_sb->s_encoding &&
@@ -1276,6 +1281,13 @@ fallback:
 }
 EXPORT_SYMBOL(generic_ci_d_compare);
 
+/**
+ * generic_ci_d_hash - generic d_hash implementation for casefolding filesystems
+ * @dentry:	dentry of the parent directory
+ * @str:	qstr of name whose hash we should fill in
+ *
+ * Return: 0 if hash was successful or unchanged, and -EINVAL on error
+ */
 int generic_ci_d_hash(const struct dentry *dentry, struct qstr *str)
 {
 	const struct inode *inode = READ_ONCE(dentry->d_inode);
@@ -1328,10 +1340,10 @@ static const struct dentry_operations generic_encrypted_ci_dentry_ops = {
  * This function sets the dentry ops for the given dentry to handle both
  * casefolding and encryption of the dentry name.
  */
-void generic_set_encrypted_ci_d_ops(struct inode *dir, struct dentry *dentry)
+void generic_set_encrypted_ci_d_ops(struct dentry *dentry)
 {
 #ifdef CONFIG_FS_ENCRYPTION
-	if (dentry->d_flags & DCACHE_ENCRYPTED_NAME) {
+	if (dentry->d_flags & DCACHE_NOKEY_NAME) {
 #ifdef CONFIG_UNICODE
 		if (dir->i_sb->s_encoding) {
 			d_set_d_op(dentry, &generic_encrypted_ci_dentry_ops);
