@@ -100,10 +100,10 @@ compile() {
 	make -j"$PROCS" O=out CROSS_COMPILE=aarch64-elf-
 	BUILD_END=$(date +"%s")
 	DIFF=$((BUILD_END - BUILD_START))
-	if [ -f "$KERNEL_DIR"/out/arch/arm64/boot/Image.gz-dtb ] 
+	if [ -f "$IMG_DIR"/Image.gz-dtb ] 
 	then
 		echo -e "Kernel successfully compiled"
-	elif ! [ -f $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb ]
+	elif ! [ -f "$IMG_DIR"/Image.gz-dtb ]
 	then
 		echo -e "Kernel compilation failed"
 		tg_post_msg "<b>Build failed to compile after $((DIFF / 60)) minute(s) and $((DIFF % 60)) seconds</b>" "$CHATID"
