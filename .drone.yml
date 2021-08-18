@@ -13,6 +13,3 @@ steps:
     environment: 
       TELEGRAM_TOKEN: 
         from_secret: BOT_API_KEY
-    trigger: 
-      branch: 
-        - 11.0-rebase
